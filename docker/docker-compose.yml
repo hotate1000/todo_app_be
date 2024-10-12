@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: sys-db-mysql
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5001:3306"
+    expose:
+      - 5001
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: sys_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_TCP_PORT: 5001
+      TZ: Asia/Tokyo
+    volumes:
+      # 永続化ストレージの設定。
+      # dbはホスト側で定義された名前付きボリュームを指す。
+      # /var/lib/mysql は、MySQLのデータが保存されるコンテナ内のディレクトリ
+      # コンテナ内の /var/lib/mysql ディレクトリがホスト側の db ボリュームとマウントされ、データが永続化。コンテナを停止または削除しても、このディレクトリに保存されたデータは保持。
+      - "db:/var/lib/mysql"
+      # 設定ファイルの共有
+      # ./mysql/my.cnf はホストマシン上の相対パス
+      # /etc/mysql/my.cnf は、コンテナ内での MySQL の設定ファイル
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - sys-db-app-sql-net
+  app:
+    container_name: sys-db-be
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      MODE: "local"
+    volumes:
+      - "../src:/src"
+    ports:
+      - "8000:80"
+    tty: true
+    depends_on:
+      - db
+    networks:
+      - db_network
+      - sys-db-app-sql-net
+
+volumes:
+  db:
+    driver: local
+
+networks:
+  db_network:
+    external: true
+  sys-db-app-sql-net:
+    external: true
