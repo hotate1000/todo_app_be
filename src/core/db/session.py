@@ -5,9 +5,9 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 
 setting = get_setting()
 
-
 session_context = ContextVar("session_context", default=None)
 
+DB_URL = f"mysql+aiomysql://{setting.db_user}:{setting.db_password}@{setting.db_host}:{setting.db_port}/{setting.db_name}?charset=utf8mb4"
 
 def create_engine_and_session_factory(database_url: str):
     # create_async_engine(): 非同期データベースエンジンを作成し、データベースとの接続を非同期で管理。
@@ -28,8 +28,7 @@ def create_engine_and_session_factory(database_url: str):
 
 
 def setup():
-    db_url = f"mysql+aiomysql://{setting.db_user}:{setting.db_password}@{setting.db_host}/{setting.db_name}?charset=utf8mb4"
-    session_factory = create_engine_and_session_factory(db_url)
+    session_factory = create_engine_and_session_factory(DB_URL)
     session = async_scoped_session(session_factory, scopefunc=session_context.get)
     return session
 
