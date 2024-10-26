@@ -16,7 +16,6 @@ class Setting:
     db_name: str = os.getenv("DB_NAME")
     db_port: str = os.getenv("DB_PORT")
 
-
 # @lru_cacheについて関数の結果をメモリに保存するデコレータ。
 # 関数が同じ引数で何度も呼び出された際に、計算結果を再利用してパフォーマンスを向上させる。
 # 計算コストが高い関数や、頻繁に同じ結果を返す関数で効果的。

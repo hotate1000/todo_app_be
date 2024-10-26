@@ -24,7 +24,7 @@ class UserService(UserServiceInterface):
             with cls._lock:
                 if not cls._instance:
                     cls._instance = cls.__internal_new__()
-            return cls._instance
+        return cls._instance
 
     @Transactional()
     async def find_all(self) -> List[UserDTO]:

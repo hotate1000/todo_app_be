@@ -6,7 +6,6 @@ from .dto import UserDTO, UserRequestDTO
 from .service.user_service import UserService
 
 
-
 user_router = APIRouter()
 
 

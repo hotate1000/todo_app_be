@@ -10,8 +10,8 @@ class User(Base, TimeStamp):
   __tablename__ = "user"
 
   id: Mapped[Integer] = mapped_column(Integer, primary_key=True, autoincrement=True)
-  email: Mapped[String] = mapped_column(String(255), nullable=False, index=True, comment="メールアドレス")
+  email: Mapped[String] = mapped_column(String(255), nullable=False, index=True, unique=True, comment="メールアドレス")
   last_name: Mapped[String] = mapped_column(String(50), nullable=False, comment="苗字")
   first_name: Mapped[String] = mapped_column(String(50), nullable=False, comment="名前")
   is_active: Mapped[Boolean] = mapped_column(Boolean, default=False, server_default=text("0"), nullable=False, index=True, comment="アクティブ")
-  slack_id: Mapped[String] = mapped_column(String(50), nullable=True, comment="スラックID")
+  slack_id: Mapped[String] = mapped_column(String(50), nullable=True, index=True, unique=True, comment="スラックID")

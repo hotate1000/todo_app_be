@@ -37,6 +37,11 @@ services:
       dockerfile: Dockerfile
     environment:
       MODE: "local"
+      DB_HOST: db
+      DB_NAME: sys_db
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_PORT: 5001
     volumes:
       - "../src:/src"
     ports:
