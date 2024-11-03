@@ -1,4 +1,4 @@
-from  app.conf.dto import BaseDTO
+from app.conf.dto import BaseDTO
 
 
 class UserRequestDTO(BaseDTO):
