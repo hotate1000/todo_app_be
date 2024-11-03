@@ -1,7 +1,7 @@
+from typing import List
 from fastapi import APIRouter, status, Depends
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
-from typing import List
 from .dto import UserDTO, UserRequestDTO
 from .service.user_service import UserService
 
@@ -24,6 +24,7 @@ async def find_all(
         content=jsonable_encoder(user_dtos),
         status_code=status.HTTP_200_OK
     )
+
 
 @user_router.post(
     "",

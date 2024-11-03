@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
 
 
-class TaskServiceInterface(ABC):
+class TaskActionLogServiceInterface(ABC):
     pass
