@@ -2,8 +2,7 @@ from fastapi import APIRouter, status, Depends
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from typing import List
-from .dto.user_dto import UserDTO
-from .dto.user_request_dto import UserRequestDTO
+from .dto import UserDTO, UserRequestDTO
 from .service.user_service import UserService
 
 

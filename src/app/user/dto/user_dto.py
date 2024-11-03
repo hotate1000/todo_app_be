@@ -1,6 +1,6 @@
 from pydantic import ConfigDict
 from datetime import datetime
-from .user_request_dto import UserRequestDTO
+from . import UserRequestDTO
 
 
 class UserDTO(UserRequestDTO):

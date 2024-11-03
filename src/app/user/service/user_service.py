@@ -2,7 +2,7 @@ from .user_service_interface import UserServiceInterface
 from threading import Lock
 from typing import List
 from core.db import Transactional
-from ..dto.user_dto import UserDTO, UserRequestDTO
+from ..dto import UserDTO, UserRequestDTO
 from ..model.user import User
 from ..repository.user_repository import user_repository
 
