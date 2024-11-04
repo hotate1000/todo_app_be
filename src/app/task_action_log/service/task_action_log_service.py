@@ -30,7 +30,7 @@ class TaskActionLogService(TaskActionLogServiceInterface):
     async def find_all(self) -> List[TaskActionLogDTO]:
         task_action_log_models: List[TaskActionLog] = await task_action_log_repository.find_all()
 
-        task_action_log_dtos: List[TaskActionLogDTO] = [TaskActionLogDTO.model_validate(task_action_log_model) for task_action_log_model in task_action_log_models]
+        task_action_log_dtos: List[TaskActionLogDTO] = [TaskActionLogDTO.model_validate(task_action_log_model.__dict__) for task_action_log_model in task_action_log_models]
 
         return task_action_log_dtos
 
@@ -40,6 +40,6 @@ class TaskActionLogService(TaskActionLogServiceInterface):
 
         result: TaskActionLog = await task_action_log_repository.save(task_action_log_model)
 
-        task_action_log_dto: TaskActionLogDTO = TaskActionLogDTO.model_validate(result)
+        task_action_log_dto: TaskActionLogDTO = TaskActionLogDTO.model_validate(result.__dict__)
 
         return task_action_log_dto
