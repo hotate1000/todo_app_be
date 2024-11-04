@@ -1,6 +1,8 @@
 from sqlalchemy import func, select, update, delete, desc, asc, insert, literal_column
-from typing import TypeVar, Generic, Type, List
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import DeclarativeBase
+from fastapi import HTTPException, status
+from typing import TypeVar, Generic, Type, List
 from core.db import session
 
 
@@ -18,6 +20,12 @@ class BaseRepository(Generic[ModelType]):
         return result.scalars().all()
 
     async def save(self, model: ModelType) -> ModelType:
-        session.add(model)
-        await session.flush()
-        return model
+        try:
+            session.add(model)
+            await session.flush()
+            return model
+        except IntegrityError as e:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"INSERT時にエラーが発生しました。{e}"
+            )

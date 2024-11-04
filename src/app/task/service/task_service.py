@@ -30,7 +30,7 @@ class TaskService(TaskServiceInterface):
     async def find_all(self) -> List[TaskDTO]:
         task_models: List[Task] = await task_repository.find_all()
 
-        task_dtos: List[TaskDTO] = [TaskDTO.model_validate(task_model) for task_model in task_models]
+        task_dtos: List[TaskDTO] = [TaskDTO.model_validate(task_model.__dict__) for task_model in task_models]
 
         return task_dtos
 
@@ -40,6 +40,6 @@ class TaskService(TaskServiceInterface):
 
         result: Task = await task_repository.save(task_model)
 
-        task_dto: TaskDTO = TaskDTO.model_validate(result)
+        task_dto: TaskDTO = TaskDTO.model_validate(result.__dict__)
 
         return task_dto

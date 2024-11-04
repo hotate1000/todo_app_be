@@ -9,4 +9,4 @@ class TaskRequestDTO(BaseDTO):
     content: str
     deadline_at: date
     completed_at: datetime
-    is_deleted: bool
+    is_deleted: bool = False

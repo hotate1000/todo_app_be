@@ -30,7 +30,7 @@ class UserService(UserServiceInterface):
     async def find_all(self) -> List[UserDTO]:
         user_models: List[User] = await user_repository.find_all()
 
-        user_dtos: List[UserDTO] = [UserDTO.model_validate(user_model) for user_model in user_models]
+        user_dtos: List[UserDTO] = [UserDTO.model_validate(user_model.__dict__) for user_model in user_models]
 
         return user_dtos
 
@@ -40,6 +40,6 @@ class UserService(UserServiceInterface):
 
         result: User = await user_repository.save(user_model)
 
-        user_dto: UserDTO = UserDTO.model_validate(result)
+        user_dto: UserDTO = UserDTO.model_validate(result.__dict__)
 
         return user_dto
